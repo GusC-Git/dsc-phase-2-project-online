@@ -91,6 +91,7 @@ This is King County's definition for what each grade scale means. Any homes abov
 This graph provides a feel for everything. The points on the main graph show the distribution of house grades in relation to price, with darker coloring showing a greater concentration of houses sold at that grade/price combination. Across the graph we have a contrasting-colored line that shows the average relationship across grade. On the sides are histogram plots of both grade (on top) and price(to the right) providing the corresponding distribution. The Pearson correlation coefficient between the two is 0.65282, a moderately high coefficient and thus a fairly strong correlation.
 
 ### Q3: How does Sale Price Relate to Distance From Microsoft and Amazon HQ?
+As a business, we would like to decide whether it would be better for our future employees if we were to establish a singluar HQ, or if we were to split it into multiple offices scattered about the area. In order to answer with, we will analyze how the location of 2 of the largest HQs in Seattle relate to housing price.
 <img src = "./images/map_of_hq_and_center.PNG">
 The red markers indicate the the locations of Microsoft and Amazon HQ while the blue marker is the centerpoint between the two. lat/long for the HQs was found thanks to Google and centerpoint is the average of the lat/long. I then used the pythagorean theorem to calculate the distance between each sold house and this centerpoint with the following:
 ```
@@ -103,9 +104,57 @@ df['log_dist_frm_center'] = df['distance_frm_center'].map(lambda x: np.log(x))
 ```
 A lot of the data seems to be located in one spot so in visualizing the data, I decided to have it locally weighted via turning lowess=True. This will also give us a line that represents the trend of the data. the height of the bins represent the confidence interval.
 <img src="./images/logdist_price_lowess.png">
-A larger negative number means it is closer to 0. There is some form of relationship between the distance from the center and price. We see that the most expensive houses tend to be located closer to this center point. From this we can say that the closer a home is to this point, the more expensive it is likely to be. This can be attributed to many different factors; there is more than one reason for wanting to live in downtown Seattle. More information is needed, and it would be greatly to our advantage if we had data of this county for more than just 2015. It would be interesting to see what the effect of each of Microsoft and Amazon on the housing market in the respective years they established themselves in the city and the years that followed.
+A larger negative number means it is closer to 0. There is some form of relationship between the distance from the center and price. We see that the most expensive houses tend to be located closer to this center point. From this we can say that the closer a home is to this point, the more expensive it is likely to be. This can be attributed to many different factors; there is more than one reason for wanting to live in downtown Seattle.
+####
+More information is needed in order to decide whether a singular or spread out HQ would be better, and it would be greatly to our advantage if we had data of this county for more than just 2015. It would be interesting to see what the effect of each of Microsoft and Amazon on the housing market in the respective years they established themselves in the city and the years that followed.
 
 ### Q4: How does Price relate to Population Density, and How does Population Density relate to In the City or Suburbs?
+<img src="./images/popdensity_price.png">
+Population Densities were found for each zipcode. There does not appear to be a general or consistent trend when looking from least to highest population density.
+####
+However, I was able to also acquire which zipcodes belong to the city, and which to the suburbs.
+```
+options = [98155, 98177, 98133, 98155, 98125, 98117, 98103, 98115, 98105, 98102, 98112, 98109, 98107, 98119, 98199, 98122, 98144, 98134, 98108, 98118, 98168, 98106, 98126, 98136, 98116, 98146, 98178, 98121, 98101, 98154, 98104]  
+seattle_proper = df[df['zipcode'].isin(options)] 
+
+non_city_options = [98028, 98074, 98053, 98003, 98198, 98038, 98007, 98019, 98002, 98040, 98092, 98030, 98052, 98027, 98058, 98001, 98056, 98166, 98023, 98070, 98148, 98042, 98008, 98059, 98004, 98005, 98034, 98075, 98010, 98032, 98045, 98077, 98065, 98029, 98006, 98022, 98033, 98024, 98011, 98031, 98072, 98188, 98014, 98055, 98039]
+burbs = df[df['zipcode'].isin(non_city_options)] 
+```
+Categorizing and creating separate lines based on city or suburb, something interesting appears:
+<img src = "./images/popdensity_city_burb.png">
+There is a distinct area of separation of population densities between city and suburbs. It makes intuitive sense, but the areas that are considered to be part of the city of Seattle are more dense than what is considered suburb. From the suburb representative area of the curve, the graph also shows that there are some suburbs that are significantly more expensive to live in than others.
+####
+Because of this distinct split, I have decided to split my dataset into two and create two predictive models: One for homes considered to be within the city, and another for homes considered to be in the suburbs.
+
+## Final Models
+Created a correlation heatmap to get a feel for what is correlated with price and to watch out for what may cause multicollinearity.
+<img src='./images/corr_heatmap.png'>
+From here, I chose my variables and created two models, one for homes within the city and one for homes in the suburbs.
+***Note***
+I decided to include a constant in my model. When I excluded the constant and checked for multicollinearity, the strength of the means would overpower and the model would find multicollinearity. With a constant, none of our added features surpass our VIF threshold.
+
+### Residuals Check
+Since the amount of data was large, I printed graphs of the distribution on my residuals for each model.
+<img src= "./images/city_residuals.PNG">
+<img src="./images/burb_residuals.PNG">
+
+### OLS Regression Models
+
+### Cross Validation in Sci-kit Learn
+
+### Train-Test Split testing
+
+## Business Reccommendations
+
+## Future Work
+It would be beneficial to acquire data that spans more than the course of one year to analyze the effect of the establishment of Microsoft and Amazon on the housing market in Seattle.
+Furthermore, with this information we could answer the crucial question of whether to establish a single HQ or if it may be better to have multiple offices
+
+
+## Additional Info and Special Thanks
+
+Special Thanks to my fellow peers in my cohort at Flatiron for their continued support, my Instructor Rafael Carrasco for his continued guidance, and our Educational Coach Talia Salzberg-Horowitz for support, time-management advice, all else she does for us.
+
 
 
 ### GitHub Repository
