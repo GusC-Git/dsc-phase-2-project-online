@@ -1,48 +1,79 @@
-# Phase 2 Project
+# Phase 2 Project - King County Housing Data
+Non-technical presentation link:
+Non-technical recording link:
 
 ## Introduction
 
-In this lesson, we review the guidelines for the Phase 2 Project.
+This is my second project for Flatiron School and for this project I looked at Housing Data from 2015 for King County, WA. My goal was to build a linear regression model using OLS to predict house sales price. In this Readme I will walk through the perspective I chose from which to approach and create my business problem, my data cleaning process, the questions I chose to answer for my exploratory data analysis (EDA), and lastly the OLS models I created and my model verification.
 
-## Objectives
 
-You will be able to:
+## Business Problem
 
-* Start your Phase 2 Project
-* Check that your project meets the requirements
-* Submit your project materials in Canvas
-* Prepare for your project review
+I wanted to take an approach that less readily comes to mind when asked 'why am I modeling to predict for price?'. I decided to approach this project from the perspective of an internal report for a company who is seeking to establish a new headquarters within King County and is wanting to know what the housing market would look like for their future employees // tentatively how this decision could affect the current housing landscape of King County.
 
-## Project Overview
+### Reasoning
+King County is home to Seattle, one of the modern tech centers of the US.
 
-Another module down--you're almost half way there!
+<img src = https://content.lib.washington.edu/imls/kcsnapshots/images/kc-map.gif>
 
-![awesome](https://raw.githubusercontent.com/learn-co-curriculum/dsc-phase-2-project-online/master/halfway-there.gif)
+When I first thought of Seattle, Microsoft and Amazon--both headquartered there--came to mind. While both companies have brought massive technological growth to the City of Enterprise and Self-promotion, this growth has also created a dearth of affordable housing for the working population. Seattle currently struggles with high homelessness, issues related to environmental justice, and gentrification. While my model does not to seek to solve these problems, I decided on this approach so that I may in some way acknowlegde these issues. By approaching it from the perspective of a company wanting to be concientious of their next big move and what the market could look like for their future employees, I'm able to ask myself a few interesting questions in this assignment and a lot more for future work.
 
-All that remains in Phase 2 is to put our newfound data science skills to use with a large project! You should expect this project to take between 20 and 25 hours of solid, focused effort. If you're done way quicker, go back and dig in deeper or try some of the optional "level up" suggestions. If you're worried that you're going to get to 30 hrs and still not even have the data imported, reach out to an instructor in Slack ASAP to get some help!
+## Contents within repository
 
-### The Data
+### data folder
+Contains the initial given dataset as well as the cleaned dataset that was a product of my data cleaning notebook.
 
-For this project, you'll be working with the King County House Sales dataset. We've modified the dataset to make it a bit more fun and challenging.  The dataset can be found in the file `kc_house_data.csv` in the data folder in this repo.
+### notebooks folder
+Contains the code for my data cleaning, my EDA, my final model, and a .py file that has some functions that were made and used throughout my code.
 
-The description of the column names can be found in the `column_names.md` file in the data folder in this repo. As with most real world data sets, the column names are not perfectly described, so you'll have to do some research or use your best judgment if you have questions relating to what the data means.
+### images folder
+Contains the images of graphs and data that you see here in this readme.
 
-You'll clean, explore, and model this dataset with a multivariate linear regression to predict the sale price of houses as accurately as possible.
+### presentation folder
+Contains my non-technical presentation recording and slide deck, both of which also have their urls at the start of this readme.
 
-### Business Problem
 
-For this project, it will be up to you to define a stakeholder and business problem appropriate to this dataset.
 
-## Deliverables
+## Data Cleaning
+### Dealing with NaN values
+In the data set I found 3 different columns which had NaN values: 'yr_renovated' with 3,842 NaNs, 'waterfront' with 2,376 NaNs, and 'view' with 63 NaNs. Each of these columns contain 0 values, with two columns, 'yr_renovated' and 'waterfront' being categories that should be known if it applied to each house. For dealing with these values, since it is reasonable to have them as value 0 for these columns, I filled in the NaNs with 0.
 
-There are four deliverables for this project:
+### Dealing with data types
+I changed the 'sqft_basement' column to be numerical instead of an object. In order to do this, I had to change the data entries of '?' into a number. I first subsetted the dataframe into all rows where '?' was not a value for 'sqft_basement'. Then, I checked to see if 'sqft_living' - 'sqft_above' = int('sqft_basement') for all rows within the subsetted dataframe. It turned out to be the case, so I stated:
+```
+df['sqft_basement'] = df['sqft_living'] - df['sqft_above']
+```
+To solve that issue.
 
-1. A **GitHub repository**
-2. A **Jupyter Notebook**
-3. A non-technical presentation **slide deck**
-4. A non-technical presentation **recording**
+### Removing outliers
+The dataset given was tremendous with 21,597 different entries. For all numerical columns in which it made sense, I trimmed the dataset to be within 3 standard deviations from the mean for each column with the following function:
+```
+def get_trimmed_dataframe(df, target_features):
+    """This function will get the standard deviations of a dataframe for columns of your choice and will return a dataframe with all of the values within 3 standard deviations of each original column. The index will be reset in each one.
+    
+    df : pandas dataframe
+    ---
+    target_features : list of strings containing the features you wish to cut out the outliers from
+    ---
+    return output : Will be a new dataframe with a reset index. All the data related to each of the target features will be within 3 standard deviations of the mean.
+    """
+    trimmed_df = df
+    for feature in target_features:
+        lower, upper = check_deviation_range(df, feature)
+        trimmed_df = trimmed_df[(df[feature] > lower) & (df[feature] < upper)]
+    trimmed_df = trimmed_df.reset_index().drop(columns='index')
+    return trimmed_df
+```
+After removing outliers, I saved the dataframe as a csv and exported it for use in my EDA.
 
-Keep in mind that the audience for these deliverables is not only your teacher, but also potential employers. Employers will look at your project deliverables to evaluate multiple skills, including coding, modeling, communication, and domain knowledge. You will want to polish these as much as you can, both during the course and afterwards.
+*Side Note*
+There are a few decisions I could have made differently, and it would be interesting to see how they would affect my models. In trimming my dataset I know that I run the risk of losing more data than intended if the data in the columns are not normal (majority weren't) however, I only removed less than 2000 rows of data using this method so overall I am happy with the amount of data I preserved.
+
+## Exploratory Data Analysis
+
+### Q1: What is the relationship between year built and sale price?
+
+
 
 ### GitHub Repository
 
