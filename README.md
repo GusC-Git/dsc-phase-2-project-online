@@ -72,7 +72,40 @@ There are a few decisions I could have made differently, and it would be interes
 ## Exploratory Data Analysis
 
 ### Q1: What is the relationship between year built and sale price?
+<img src = "./images/yr_built_vs_price.png">
 
+Houses built in the early part of the century, between 1900's and 1940's have on average sold for more when compared to houses built past 1940. There is a strong dip in house price for the houses built in 1940-1950, and there has been a significant increase in housing prices for newer construction.
+### Q1b: Does renovation affect the sale price of a house?
+<img src = "./images/renovated_built_and_non_vs_price.png">
+
+We can see there is a lot more variation in price of a home that has been renovated and on average, renovated homes do tend to sell for more, however if we had more data perhaps we could better explain some of the fluctuation. For example, was the renovation neccessary in order to bring the house up to code and put on the market in the first place? We need to keep in consideration that not all renovations are adding improvements to already good homes. The graph below also gives us more insight.
+
+<img src = "./images/nonrenovated_vs_price.png">
+This looks exactly the same as the graph for our entire dataset. Similarities between the lines of non-renovated and total dataset can be attributed to the fact that most homes are not renovated. The sample size for renovated and not renovated are drastically different, where renovated homes account for less than 4% of the total dataset.
+
+### Q2: What is the Relationship between Grade and Sale Price?
+<img src = "./images/KingCountyGradeScaleHousingFlatiron.PNG">
+This is King County's definition for what each grade scale means. Any homes above 11 were considered outliers in our data trimming method.
+
+<img src = "./images/grade_vs_price.png">
+This graph provides a feel for everything. The points on the main graph show the distribution of house grades in relation to price, with darker coloring showing a greater concentration of houses sold at that grade/price combination. Across the graph we have a contrasting-colored line that shows the average relationship across grade. On the sides are histogram plots of both grade (on top) and price(to the right) providing the corresponding distribution. The Pearson correlation coefficient between the two is 0.65282, a moderately high coefficient and thus a fairly strong correlation.
+
+### Q3: How does Sale Price Relate to Distance From Microsoft and Amazon HQ?
+<img src = "./images/map_of_hq_and_center.PNG">
+The red markers indicate the the locations of Microsoft and Amazon HQ while the blue marker is the centerpoint between the two. lat/long for the HQs was found thanks to Google and centerpoint is the average of the lat/long. I then used the pythagorean theorem to calculate the distance between each sold house and this centerpoint with the following:
+```
+df['distance_frm_center'] = (df['lat']-center[0])**2 + (df['long']-center[1])**2
+```
+<img src="./images/dist_price.png">
+It looked like it could use a log transform so then I did that:
+```
+df['log_dist_frm_center'] = df['distance_frm_center'].map(lambda x: np.log(x))
+```
+A lot of the data seems to be located in one spot so in visualizing the data, I decided to have it locally weighted via turning lowess=True. This will also give us a line that represents the trend of the data. the height of the bins represent the confidence interval.
+<img src="./images/logdist_price_lowess.png">
+A larger negative number means it is closer to 0. There is some form of relationship between the distance from the center and price. We see that the most expensive houses tend to be located closer to this center point. From this we can say that the closer a home is to this point, the more expensive it is likely to be. This can be attributed to many different factors; there is more than one reason for wanting to live in downtown Seattle. More information is needed, and it would be greatly to our advantage if we had data of this county for more than just 2015. It would be interesting to see what the effect of each of Microsoft and Amazon on the housing market in the respective years they established themselves in the city and the years that followed.
+
+### Q4: How does Price relate to Population Density, and How does Population Density relate to In the City or Suburbs?
 
 
 ### GitHub Repository
