@@ -114,9 +114,12 @@ Population Densities were found for each zipcode. There does not appear to be a 
 
 ```options = [98155, 98177, 98133, 98155, 98125, 98117, 98103, 98115, 98105, 98102, 98112, 98109, 98107, 98119, 98199, 98122, 98144, 98134, 98108, 98118, 98168, 98106, 98126, 98136, 98116, 98146, 98178, 98121, 98101, 98154, 98104]  
 seattle_proper = df[df['zipcode'].isin(options)] 
-
+```
+```
 non_city_options = [98028, 98074, 98053, 98003, 98198, 98038, 98007, 98019, 98002, 98040, 98092, 98030, 98052, 98027, 98058, 98001, 98056, 98166, 98023, 98070, 98148, 98042, 98008, 98059, 98004, 98005, 98034, 98075, 98010, 98032, 98045, 98077, 98065, 98029, 98006, 98022, 98033, 98024, 98011, 98031, 98072, 98188, 98014, 98055, 98039]
-burbs = df[df['zipcode'].isin(non_city_options)]```
+burbs = df[df['zipcode'].isin(non_city_options)]
+```
+
 Categorizing and creating separate lines based on city or suburb, something interesting appears.
 <img src = "./images/popdensity_city_burb.png">
 There is a distinct area of separation of population densities between city and suburbs. It makes intuitive sense, but the areas that are considered to be part of the city of Seattle are more dense than what is considered suburb. From the suburb representative area of the curve, the graph also shows that there are some suburbs that are significantly more expensive to live in than others.
