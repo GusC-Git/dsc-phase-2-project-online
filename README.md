@@ -105,7 +105,7 @@ df['log_dist_frm_center'] = df['distance_frm_center'].map(lambda x: np.log(x))
 A lot of the data seems to be located in one spot so in visualizing the data, I decided to have it locally weighted via turning lowess=True. This will also give us a line that represents the trend of the data. the height of the bins represent the confidence interval.
 <img src="./images/logdist_price_lowess.png">
 A larger negative number means it is closer to 0. There is some form of relationship between the distance from the center and price. We see that the most expensive houses tend to be located closer to this center point. From this we can say that the closer a home is to this point, the more expensive it is likely to be. This can be attributed to many different factors; there is more than one reason for wanting to live in downtown Seattle.
----
+----
 More information is needed in order to decide whether a singular or spread out HQ would be better, and it would be greatly to our advantage if we had data of this county for more than just 2015. It would be interesting to see what the effect of each of Microsoft and Amazon on the housing market in the respective years they established themselves in the city and the years that followed.
 
 ### Q4: How does Price relate to Population Density, and How does Population Density relate to In the City or Suburbs?
@@ -119,7 +119,7 @@ seattle_proper = df[df['zipcode'].isin(options)]
 non_city_options = [98028, 98074, 98053, 98003, 98198, 98038, 98007, 98019, 98002, 98040, 98092, 98030, 98052, 98027, 98058, 98001, 98056, 98166, 98023, 98070, 98148, 98042, 98008, 98059, 98004, 98005, 98034, 98075, 98010, 98032, 98045, 98077, 98065, 98029, 98006, 98022, 98033, 98024, 98011, 98031, 98072, 98188, 98014, 98055, 98039]
 burbs = df[df['zipcode'].isin(non_city_options)]
 ```
-
+----
 Categorizing and creating separate lines based on city or suburb, something interesting appears.
 <img src = "./images/popdensity_city_burb.png">
 There is a distinct area of separation of population densities between city and suburbs. It makes intuitive sense, but the areas that are considered to be part of the city of Seattle are more dense than what is considered suburb. From the suburb representative area of the curve, the graph also shows that there are some suburbs that are significantly more expensive to live in than others.
