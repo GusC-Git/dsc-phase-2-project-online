@@ -110,9 +110,7 @@ More information is needed in order to decide whether a singular or spread out H
 
 ### Q4: How does Price relate to Population Density, and How does Population Density relate to In the City or Suburbs?
 <img src="./images/popdensity_price.png">
-Population Densities were found for each zipcode. There does not appear to be a general or consistent trend when looking from least to highest population density.
-####
-However, I was able to also acquire which zipcodes belong to the city, and which to the suburbs.
+Population Densities were found for each zipcode. There does not appear to be a general or consistent trend when looking from least to highest population density. However, I was able to also acquire which zipcodes belong to the city, and which to the suburbs.
 ```
 options = [98155, 98177, 98133, 98155, 98125, 98117, 98103, 98115, 98105, 98102, 98112, 98109, 98107, 98119, 98199, 98122, 98144, 98134, 98108, 98118, 98168, 98106, 98126, 98136, 98116, 98146, 98178, 98121, 98101, 98154, 98104]  
 seattle_proper = df[df['zipcode'].isin(options)] 
