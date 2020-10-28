@@ -156,7 +156,7 @@ For the split, I used 15% of the data to test on, and the rest to train.
 #### City Model
 <img src="./images/city_train_test.PNG">
 The City model is fairly close across our training and testing data.
-There is a ~ 0.00717 difference between our training and testing data in R2 value.
+There is a ~ 0.00717 difference between our training and testing data in R2 value. 
 #### Suburbs Model
 <img src="./images/burb_train_test.PNG">
 The Suburbs model is also close across our training and testing data.
@@ -195,28 +195,11 @@ It is not enough to just avoid doing bad, but we must seek to actively do good a
 #### ----Article----
 https://www.thenation.com/article/archive/racial-and-environmental-justice-are-two-sides-same-coin/
 #### ----Video----
-https://youtu.be/dREtXUij6_c
+https://youtu.be/dREtXUij6_c 
+#### -----------
 Special Thanks to my fellow peers in my cohort at Flatiron for their continued support, my Instructor Rafael Carrasco for his continued guidance, and our Educational Coach Talia Salzberg-Horowitz for support, time-management advice, all else she does for us. An additional, and very special thanks to whoever you are reading this. Thank you for showing interest in my project.
 
 
-
-
-
-### Jupyter Notebook
-
-Your Jupyter Notebook is the primary source of information about your analysis. At a minimum, it should contain or import all of the code used in your project and walk the reader through your project from start to finish. You may choose to use multiple Jupyter Notebooks in your project, but you should have one that provides a full project overview as a point of entry for visitors.
-
-For this project, your Jupyter Notebook should meet the following specifications:
-
-
-
-#### Model Quality/Approach
-
-* Your model should not include any predictors with p-values greater than .05.  
-* Your notebook shows an iterative approach to modeling, and details the parameters and results of the model at each iteration.  
-    * **Level Up**: Whenever necessary, you briefly explain the changes made from one iteration to the next, and why you made these choices.  
-* You provide at least 1 paragraph explaining your final model.   
-* You pick at least 3 coefficients from your final model and explain their impact on the price of a house in this dataset.   
 
 ### Non-Technical Presentation Slides and Recording
 
@@ -233,13 +216,7 @@ Your presentation should:
 
 We recommend using Google Slides, PowerPoint or Keynote to create your presentation slides. We recommend using Zoom to record your live presentation to a local video file ([instructions here][]) - other options include Quicktime, PowerPoint, or Nimbus. Video files must be under 500 MB and formatted as 3GP, ASF, AVI, FLV, M4V, MOV, MP4, MPEG, QT, or WMV.
 
-## Getting Started
 
-Please start by reviewing this document. If you have any questions, please ask them in Slack ASAP so (a) we can answer the questions and (b) so we can update this document to make it clearer.
-
-**When you start on the project, reach out to an instructor immediately via Slack to let them know and schedule your project review.** If you're not sure who to schedule with, please ask in your cohort channel in Slack.
-
-Once you're done with the numbered topics in Phase 1, please start on the project. Do that by forking [the Phase 2 Project Repository][], cloning it locally, and working in the `student.ipynb` file. Make sure to also add and commit a PDF of your presentation to your repository with a file name of `presentation.pdf`.
 
 ## Project Submission and Review
 
