@@ -156,7 +156,7 @@ For the split, I used 15% of the data to test on, and the rest to train.
 #### City Model
 <img src="./images/city_train_test.PNG">
 The City model is fairly close across our training and testing data.
-There is a ~ 0.00717 difference between our training and testing data in R2 value. 
+There is a ~ 0.00717 difference between our training and testing data in R2 value.
 #### Suburbs Model
 <img src="./images/burb_train_test.PNG">
 The Suburbs model is also close across our training and testing data.
