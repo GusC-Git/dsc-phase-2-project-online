@@ -1,5 +1,5 @@
 # Phase 2 Project - King County Housing Data
-Non-technical presentation link:
+Non-technical presentation link: https://docs.google.com/presentation/d/1JpyJk5E0re5RXdVAyzGCjC55Ql3xhTbAd7psBvq-qf0/edit?usp=sharing
 Non-technical recording link:
 
 ## Introduction
@@ -157,6 +157,7 @@ For the split, I used 15% of the data to test on, and the rest to train.
 <img src="./images/city_train_test.PNG">
 The City model is fairly close across our training and testing data.
 There is a ~ 0.00717 difference between our training and testing data in R2 value.
+
 #### Suburbs Model
 <img src="./images/burb_train_test.PNG">
 The Suburbs model is also close across our training and testing data.
@@ -198,38 +199,3 @@ https://www.thenation.com/article/archive/racial-and-environmental-justice-are-t
 https://youtu.be/dREtXUij6_c 
 #### -----------
 Special Thanks to my fellow peers in my cohort at Flatiron for their continued support, my Instructor Rafael Carrasco for his continued guidance, and our Educational Coach Talia Salzberg-Horowitz for support, time-management advice, all else she does for us. An additional, and very special thanks to whoever you are reading this. Thank you for showing interest in my project.
-
-
-
-### Non-Technical Presentation Slides and Recording
-
-Your non-technical presentation is your opportunity to communicate clearly and concisely about your project and it's real-world relevance. The target audience should be people with limited technical knowledge who may be interested in leveraging your project. For Phase 1, these would be Microsoft executives interested in making decisions about movie development.
-
-Your presentation should:
-
-* Contain between 5 - 10 professional-quality slides.  
-    * **Level Up**: The slides should use visualizations whenever possible, and avoid walls of text.
-* Take no more than 5 minutes to present.   
-* Avoid technical jargon and explain the results in a clear, actionable way for non-technical audiences.
-
-**_Based on the results of your models, your presentation should discuss at least two concrete features that highly influence housing prices._**
-
-We recommend using Google Slides, PowerPoint or Keynote to create your presentation slides. We recommend using Zoom to record your live presentation to a local video file ([instructions here][]) - other options include Quicktime, PowerPoint, or Nimbus. Video files must be under 500 MB and formatted as 3GP, ASF, AVI, FLV, M4V, MOV, MP4, MPEG, QT, or WMV.
-
-
-
-## Project Submission and Review
-
-Review [the Phase Project Submission and Review guidance][] to learn how to submit your project and how it will be reviewed. Your project must pass review for you to progress to the next Phase.
-
-**Please note: We need to receive your complete submission at least 24 hours before your review to confirm that you are prepared for the review. If you wish to revise your submission, please do so no later than 3 hours before your review so that we can have time to look at your updated materials.**
-
-## Summary
-
-The end-of-phase projects and project reviews are a critical part of the program. They give you a chance to both bring together all the skills you've learned into realistic projects and to practice key "business judgement" and communication skills that you otherwise might not get as much practice with.
-
-The projects are serious and important - they can be passed and they can be failed. Take the project seriously, put the time in, ask for help from your peers or instructors early and often if you need it, and treat the review as a job interview and you'll do great. We're rooting for you to succeed and we're only going to ask you to take a review again if we believe that you need to. We'll also provide open and honest feedback so you can improve as quickly and efficiently as possible.
-
-[the Phase 2 Project Repository]: https://github.com/learn-co-curriculum/dsc-phase-2-project-online
-[instructions here]: https://support.zoom.us/hc/en-us/articles/201362473-Local-recording
-[the Phase Project Submission and Review guidance]: https://github.com/learn-co-curriculum/dsc-project-submissions-online
