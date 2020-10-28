@@ -119,12 +119,9 @@ seattle_proper = df[df['zipcode'].isin(options)]
 non_city_options = [98028, 98074, 98053, 98003, 98198, 98038, 98007, 98019, 98002, 98040, 98092, 98030, 98052, 98027, 98058, 98001, 98056, 98166, 98023, 98070, 98148, 98042, 98008, 98059, 98004, 98005, 98034, 98075, 98010, 98032, 98045, 98077, 98065, 98029, 98006, 98022, 98033, 98024, 98011, 98031, 98072, 98188, 98014, 98055, 98039]
 burbs = df[df['zipcode'].isin(non_city_options)]
 ```
-----
 Categorizing and creating separate lines based on city or suburb, something interesting appears.
 <img src = "./images/popdensity_city_burb.png">
-There is a distinct area of separation of population densities between city and suburbs. It makes intuitive sense, but the areas that are considered to be part of the city of Seattle are more dense than what is considered suburb. From the suburb representative area of the curve, the graph also shows that there are some suburbs that are significantly more expensive to live in than others.
-----
-Because of this distinct split, I have decided to split my dataset into two and create two predictive models: One for homes considered to be within the city, and another for homes considered to be in the suburbs.
+There is a distinct area of separation of population densities between city and suburbs. It makes intuitive sense, but the areas that are considered to be part of the city of Seattle are more dense than what is considered suburb. From the suburb representative area of the curve, the graph also shows that there are some suburbs that are significantly more expensive to live in than others. Because of this distinct split, I have decided to split my dataset into two and create two predictive models: One for homes considered to be within the city, and another for homes considered to be in the suburbs.
 
 ## Final Models
 Created a correlation heatmap to get a feel for what is correlated with price and to watch out for what may cause multicollinearity.
@@ -135,14 +132,39 @@ I decided to include a constant in my model. When I excluded the constant and ch
 
 ### Residuals Check
 Since the amount of data was large, I printed graphs of the distribution on my residuals for each model.
-<img src= "./images/city_residuals.PNG">
+<img src="./images/city_residuals.PNG">
 <img src="./images/burb_residuals.PNG">
 
 ### OLS Regression Models
+#### City OLS Model
+<img src="./images/city_ols_model.PNG">
+
+#### Suburb OLS Model
+<img src="./images/suburb_ols_model.PNG">
+
 
 ### Cross Validation in Sci-kit Learn
+I used a k-fold of 5 in my cross-validation
+<img src="./images/cross_validation.PNG">
+We see very minimal fluctuations among our scores for each model. The model for the suburbs is more consistent across the two models.
 
 ### Train-Test Split testing
+For the split, I used 15% of the data to test on, and the rest to train.
+#### City Model
+<img src="./images/city_train_test.PNG">
+The City model is fairly close across our training and testing data.
+There is a ~ 0.002787 difference between our training and testing data in R2 value.
+#### Suburb Model
+<img src="./images/burb_train_test.PNG">
+The Suburb model is also close across our training and testing data.
+There is a ~ 0.004425 difference between our training and testing data in R2 value.
+
+## Model Equations
+Beta coefficients have been rounded here to nearest whole number. Beta coefficients are written in full length within Final model notebook
+### City Model Equation
+#### Y(price) = 135,642*(grade) + 69,640*(was_renovated) + 2,108*(has_basement) + 61,132*(view) - 52,668*(log_distance_frm_center) + 93*(sqft_per_floor) + 20*(population_density) -975,962 (intercept)
+### Suburb Model Equation
+#### Y(price) = 121,257*(grade) + 69,206*(was_renovated) - 38,291*(has_basement) + 58,674*(view) - 113,783*(log_distance_frm_center) + 66*(sqft_per_floor) - 32*(population_density) - 845,627 (intercept)
 
 ## Business Reccommendations
 
