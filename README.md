@@ -16,7 +16,7 @@ King County is home to Seattle, one of the modern tech centers of the US.
 
 <img src = https://content.lib.washington.edu/imls/kcsnapshots/images/kc-map.gif>
 
-When I first thought of Seattle, Microsoft and Amazon--both headquartered there--came to mind. While both companies have brought massive technological growth to the City of Enterprise and Self-promotion, this growth has also created a dearth of affordable housing for the working population. Seattle currently struggles with high homelessness, issues related to environmental justice, and gentrification. While my model does not to seek to solve these problems, I decided on this approach so that I may in some way acknowlegde these issues. By approaching it from the perspective of a company wanting to be concientious of their next big move and what the market could look like for their future employees, I'm able to ask myself a few interesting questions in this assignment and a lot more for future work.
+When I first thought of Seattle, Microsoft and Amazon--both headquartered there--came to mind. While both companies have brought massive technological growth to the City of Enterprise and Self-promotion, this growth has also created a dearth of affordable housing for the working population. Seattle currently struggles with high homelessness, issues related to environmental justice, and gentrification. While my model does not to seek to solve these problems, I decided on this approach so that I may in some way acknowlegde these issues. By approaching it from the perspective of a company wanting to be concientious of their next big move and what the market could look like for their future employees, I'm able to ask myself a few interesting questions in this assignment and a lot more for future work. Also, it is known that some large companies have teams dedicated to finding housing for new hires, so envisioning that this is something a company wanting to establish a headquarters in a new city would want is plausible.
 
 ## Contents within repository
 
@@ -85,7 +85,7 @@ This looks exactly the same as the graph for our entire dataset. Similarities be
 
 ### Q2: What is the Relationship between Grade and Sale Price?
 <img src = "./images/KingCountyGradeScaleHousingFlatiron.PNG">
-This is King County's definition for what each grade scale means. Any homes above 11 were considered outliers in our data trimming method.
+This is King County's definition for what each grade scale means. Any homes above 11 were considered outliers in our data trimming method. As per our perpective we want to ensure our workers have at minimum an adequate level of living conditions. Understanding this relationship will also help us inform our future employees of available level of quality of house per price range.
 
 <img src = "./images/grade_vs_price.png">
 This graph provides a feel for everything. The points on the main graph show the distribution of house grades in relation to price, with darker coloring showing a greater concentration of houses sold at that grade/price combination. Across the graph we have a contrasting-colored line that shows the average relationship across grade. On the sides are histogram plots of both grade (on top) and price(to the right) providing the corresponding distribution. The Pearson correlation coefficient between the two is 0.65282, a moderately high coefficient and thus a fairly strong correlation.
@@ -104,11 +104,12 @@ df['log_dist_frm_center'] = df['distance_frm_center'].map(lambda x: np.log(x))
 ```
 A lot of the data seems to be located in one spot so in visualizing the data, I decided to have it locally weighted via turning lowess=True. This will also give us a line that represents the trend of the data. the height of the bins represent the confidence interval.
 <img src="./images/logdist_price_lowess.png">
-A larger negative number means it is closer to 0. There is some form of relationship between the distance from the center and price. We see that the most expensive houses tend to be located closer to this center point. From this we can say that the closer a home is to this point, the more expensive it is likely to be. This can be attributed to many different factors; there is more than one reason for wanting to live in downtown Seattle.
+A larger negative number means it is closer to 0. There is some form of relationship between the distance from the center and price. We see that the most expensive houses tend to be located closer to this center point. From this we can say that the closer a home is to this point, the more expensive it is likely to be. 
 ----
 More information is needed in order to decide whether a singular or spread out HQ would be better, and it would be greatly to our advantage if we had data of this county for more than just 2015. It would be interesting to see what the effect of each of Microsoft and Amazon on the housing market in the respective years they established themselves in the city and the years that followed.
 
 ### Q4: How does Price relate to Population Density, and How does Population Density relate to In the City or Suburbs?
+In concern for our future employees, it is worth considering what the current population density is in the region. This could also give us an idea of close to where should we build.
 <img src="./images/popdensity_price.png">
 Population Densities were found for each zipcode. There does not appear to be a general or consistent trend when looking from least to highest population density. However, I was able to also acquire which zipcodes belong to the city, and which to the suburbs.
 
@@ -120,7 +121,7 @@ non_city_options = [98028, 98074, 98053, 98003, 98198, 98038, 98007, 98019, 9800
 burbs = df[df['zipcode'].isin(non_city_options)]
 ```
 Categorizing and creating separate lines based on city or suburb, something interesting appears.
-<img src = "./images/popdensity_city_burb.png">
+<img src = "./images/popdensity_city_burb_price.png">
 There is a distinct area of separation of population densities between city and suburbs. It makes intuitive sense, but the areas that are considered to be part of the city of Seattle are more dense than what is considered suburb. From the suburb representative area of the curve, the graph also shows that there are some suburbs that are significantly more expensive to live in than others. Because of this distinct split, I have decided to split my dataset into two and create two predictive models: One for homes considered to be within the city, and another for homes considered to be in the suburbs.
 
 ## Final Models
@@ -129,6 +130,8 @@ Created a correlation heatmap to get a feel for what is correlated with price an
 From here, I chose my variables and created two models, one for homes within the city and one for homes in the suburbs.
 ***Note***
 I decided to include a constant in my model. When I excluded the constant and checked for multicollinearity, the strength of the means would overpower and the model would find multicollinearity. With a constant, none of our added features surpass our VIF threshold.
+**Additional Note**
+For adding features, I took an iterative approach that is shown in my notebook. In short, I added the residuals to the dataframe and then calculated the correlation of the residuals with variables I was interested in adding. If there was a correlation between the two, that meant it would add new data to my model and then I would add it and run the process again. I did this until the correlation coefficients were small enough that I considered them not worth adding.
 
 ### Residuals Check
 Since the amount of data was large, I printed graphs of the distribution on my residuals for each model.
@@ -139,7 +142,7 @@ Since the amount of data was large, I printed graphs of the distribution on my r
 #### City OLS Model
 <img src="./images/city_ols_model.PNG">
 
-#### Suburb OLS Model
+#### Suburbs OLS Model
 <img src="./images/suburb_ols_model.PNG">
 
 
@@ -153,35 +156,51 @@ For the split, I used 15% of the data to test on, and the rest to train.
 #### City Model
 <img src="./images/city_train_test.PNG">
 The City model is fairly close across our training and testing data.
-There is a ~ 0.002787 difference between our training and testing data in R2 value.
-#### Suburb Model
+There is a ~ 0.00717 difference between our training and testing data in R2 value.
+#### Suburbs Model
 <img src="./images/burb_train_test.PNG">
-The Suburb model is also close across our training and testing data.
-There is a ~ 0.004425 difference between our training and testing data in R2 value.
+The Suburbs model is also close across our training and testing data.
+There is a ~ 0.02025 difference between our training and testing data in R2 value.
 
 ## Model Equations
 Beta coefficients have been rounded here to nearest whole number. Beta coefficients are written in full length within Final model notebook
 ### City Model Equation
-#### Y(price) = 135,642*(grade) + 69,640*(was_renovated) + 2,108*(has_basement) + 61,132*(view) - 52,668*(log_distance_frm_center) + 93*(sqft_per_floor) + 20*(population_density) -975,962 (intercept)
-### Suburb Model Equation
-#### Y(price) = 121,257*(grade) + 69,206*(was_renovated) - 38,291*(has_basement) + 58,674*(view) - 113,783*(log_distance_frm_center) + 66*(sqft_per_floor) - 32*(population_density) - 845,627 (intercept)
+#### Y(price) = 131,117*(grade) + 90,220*(was_renovated) - 52,792*(log_distance_frm_center) + 76*(sqft_per_floor) + 19*(population_density) + 56,821*(view) + 56,582*(condition) + 24,158*(bathrooms) - 1,149,155 (intercept)
+### Suburbs Model Equation
+#### Y(price) = 108,270*(grade) + 80,544*(was_renovated) - 113,780*(log_distance_frm_center) + 38*(sqft_per_floor) - 31*(population_density) + 59,069*(view) + 19,002*(condition) + 58,214*(bathrooms) - 908,226 (intercept)
 
-## Business Reccommendations
+## Predictions of Best Features
+<img src="./images/3_strongest_features.png">
+Bathrooms and Grade both positively correlate with price in both models. Log-distance from centerpoint has a negative correlation with price but it is important to keep in mind how the transform works. This means that the closer the log distance is to 0, the further away the location is and conversely, the more negative the log-distance is, the closer the location is to the centerpoint. For the city model, the absolute value of the correlation coefficients with price for grade, bathroom, and log distance are, respectively, 0.67, 0.48, and 0.3. For the suburbs model, the absolute value of the correlation coefficients with price for grade, bathroom, and log distance are, respectively, 0.69, 0.52, 0.54. It is noteworthy that for the city model, population density, sqft_per_floor, and view all had slightly stronger coefficients than log-distance, however, I chose to display log-distance here because it has the strongest predictive quality across both models of the four variables.
+
+## Housing Conclusions and Business Reccommendations
+* Avoid neighborhoods experiencing a lot of recent renovations and homes recently renovated --- While renovated homes make up a very small minority of the sales from 2015, homes that have been renovated typically cost more than homes that have not.
+* Reccommend homes of minimum grade 7 to future employees --- When the move comes we will be able to identify nearby neighborhoods to our office(s) for our employees whose housing meet this grade qualification. This ensures adequate living conditions.
+* Consider multiple offices as opposed to a single HQ --- While we need more data before we make the final decision, our existing data lean towards the belief that a singular HQ can have a significant impact on the housing environment, especially within suburbs.
+* Place our office(s) away from the identified centerpoint --- Homes closest to this point were the most expensive. By placing our office(s) away from here, we provide the opportunity for our employees to consider living in cheaper areas.
+
+
 
 ## Future Work
-It would be beneficial to acquire data that spans more than the course of one year to analyze the effect of the establishment of Microsoft and Amazon on the housing market in Seattle.
-Furthermore, with this information we could answer the crucial question of whether to establish a single HQ or if it may be better to have multiple offices
+* Gather time data for house sale price to analyze the housing market before and since the arrival of Microsoft and Amazon. This data should ideally also include population density so that change in population density over time can also be shown.
+* Identify zipcodes/locations with large low income and minority representation so that we may avoid impacting those areas through gentrification. Housing descrimination was a legal practice in Seattle until 1968, and even into today, Seattle experiences geographical segregation amongst the various identities. In seeking to reduce our impact, we do not want to further exasperbate
+* Gather and analyze more recent data and see if there are any trends in the past 5 years. This will also strengthen the predictive possibilities of our model.
+* Identify location of undesirable places. Some neighborhoods may have low cost and low population due to undesirable characteristics, such as being located near a waste treatment facility, railyard, or landfill. It is important that we identify these locations so that we too can avoid placing our offices near there.
+* Identify location of desirable places--farmer's markets, grocery stores, hospitals, parks, public electric car charging ports. Locations like these are desirable for people to live near and improve quality of life. Some, namely farmer's markets and public electric car charging ports, have a significantly less probability to be in disenfranchised communities and could help us avoid negatively impacting the city.
+
 
 
 ## Additional Info and Special Thanks
+It is not enough to just avoid doing bad, but we must seek to actively do good and positively effect our communities. While this perspective does not solve any of the housing issues Seattle has, it does approach it from a perspective that takes into consideration a slice of the landscape of issues. We can only do better by educating ourselves and at least think about the multi-dimesnional space we live in. Thankfully Seattle has a wonderful and diverse team in their environmental justice committee seeking to improve their most affected communities. Here is an interesting article they provide on their page about environmental and racial justice and a video explaining environmental justice:
+#### ----Article----
+https://www.thenation.com/article/archive/racial-and-environmental-justice-are-two-sides-same-coin/
+#### ----Video----
+https://youtu.be/dREtXUij6_c
+Special Thanks to my fellow peers in my cohort at Flatiron for their continued support, my Instructor Rafael Carrasco for his continued guidance, and our Educational Coach Talia Salzberg-Horowitz for support, time-management advice, all else she does for us. An additional, and very special thanks to whoever you are reading this. Thank you for showing interest in my project.
 
-Special Thanks to my fellow peers in my cohort at Flatiron for their continued support, my Instructor Rafael Carrasco for his continued guidance, and our Educational Coach Talia Salzberg-Horowitz for support, time-management advice, all else she does for us.
 
 
 
-### GitHub Repository
-
-Your GitHub repository is the public-facing version of your project that your instructors and potential employers will see - make it as accessible as you can. At a minimum, it should contain all your project files and a README.md file that summarizes your project and helps visitors navigate the repository.
 
 ### Jupyter Notebook
 
@@ -189,18 +208,7 @@ Your Jupyter Notebook is the primary source of information about your analysis. 
 
 For this project, your Jupyter Notebook should meet the following specifications:
 
-#### Organization/Code Cleanliness
 
-* The notebook should be well organized, easy to follow,  and code should be commented where appropriate.  
-    * Level Up: The notebook contains well-formatted, professional looking markdown cells explaining any substantial code.  All functions have docstrings that act as professional-quality documentation
-* The notebook is written for technical audiences with a way to both understand your approach and reproduce your results. The target audience for this deliverable is other data scientists looking to validate your findings.
-
-#### Visualizations & EDA
-
-* Your project contains at least 4 meaningful data visualizations, with corresponding interpretations. All visualizations are well labeled with axes labels, a title, and a legend (when appropriate)  
-* You pose at least 3 meaningful questions and answer them through EDA.  These questions should be well labeled and easy to identify inside the notebook.
-    * **Level Up**: Each question is clearly answered with a visualization that makes the answer easy to understand.   
-* Your notebook should contain 1 - 2 paragraphs briefly explaining your approach to this project.
 
 #### Model Quality/Approach
 
