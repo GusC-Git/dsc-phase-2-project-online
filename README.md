@@ -1,6 +1,7 @@
 # Phase 2 Project - King County Housing Data
 Non-technical presentation link: https://docs.google.com/presentation/d/1JpyJk5E0re5RXdVAyzGCjC55Ql3xhTbAd7psBvq-qf0/edit?usp=sharing
-Non-technical recording link:
+#### ---
+Non-technical recording link:https://drive.google.com/file/d/1ACJ06917HrBfNTS2x5umxxn_19Z2qllu/view
 
 ## Introduction
 
